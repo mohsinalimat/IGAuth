@@ -69,7 +69,7 @@ Follow the detailed guidelines [here](https://github.com/Carthage/Carthage#if-yo
 
 ### Manual installation
 
-Simply copy the file `IGAuthViewController.swift` from `IGAuth/Classes` into your project.
+Simply copy the file [IGAuthViewController.swift](IGAuth/Classes/IGAuthViewController.swift) into your Xcode project.
 
 
 ## Usage
