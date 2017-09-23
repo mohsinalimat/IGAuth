@@ -27,14 +27,16 @@ Inspired by projects like [InstagramAuthViewController](https://github.com/Isuru
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-Second, edit the `Constants.swift` file with your client info from Instagram's [developer portal](https://www.instagram.com/developer/clients/manage/):
+Second, go to your Instagram's [developer portal](https://www.instagram.com/developer/clients/manage/), click on _Manage_ your client, and **uncheck** the option "**Disable implicit OAuth**" from the _Security_ tab.
+
+Third, edit the `Constants.swift` file with your client info from Instagram's [developer portal](https://www.instagram.com/developer/clients/manage/):
 
 ```swift
 let clientID = "YOUR CLIENT ID GOES HERE"
 let redirectURI = "YOUR REDIRECT URI GOES HERE"
 ```
 
-Third, go ahead and test it! :rocket:
+Fourth, go ahead and test it! :rocket:
 
 ## Requirements
 
@@ -72,50 +74,52 @@ Simply copy the file `IGAuthViewController.swift` from `IGAuth/Classes` into you
 
 ## Usage
 
-- Set your client info from Instagram's [developer portal](https://www.instagram.com/developer/clients/manage/):
+1. Go to your Instagram's [developer portal](https://www.instagram.com/developer/clients/manage/), click on _Manage_ your client, and **uncheck** the option "**Disable implicit OAuth**" from the _Security_ tab.
 
-```swift
-let clientID = "YOUR CLIENT ID GOES HERE"
-let redirectURI = "YOUR REDIRECT URI GOES HERE"
-```
+2. Set your client info from Instagram's [developer portal](https://www.instagram.com/developer/clients/manage/):
 
-- **Initialize** your `IGAuthViewController`:
+    ```swift
+    let clientID = "YOUR CLIENT ID GOES HERE"
+    let redirectURI = "YOUR REDIRECT URI GOES HERE"
+    ```
 
-```swift
-let vc = IGAuthViewController(clientID: clientID, redirectURI: redirectURI) { (accessToken) in
-    guard let accessToken = accessToken else {
-        print("Failed login")
-        return
+3. **Initialize** your `IGAuthViewController`:
+
+    ```swift
+    let vc = IGAuthViewController(clientID: clientID, redirectURI: redirectURI) { (accessToken) in
+        guard let accessToken = accessToken else {
+            print("Failed login")
+            return
+        }
+
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+            // Do your stuff ...
+        }
     }
+    ```
 
-    DispatchQueue.main.async {
-        self.navigationController?.popViewController(animated: true)
-        // Do your stuff ...
-    }
-}
-```
+4. **Customize** it:
 
-- **Customize** it:
+    ```swift
+    // Login permissions (https://www.instagram.com/developer/authorization/)
+    vc.authScope = "basic+public_content" // basic by default
 
-```swift
-// Login permissions (https://www.instagram.com/developer/authorization/)
-vc.authScope = "basic+public_content" // basic by default
+    // ViewController title, website title by default
+    vc.customTitle = "Instagram" // By default, the web title is displayed
 
-// ViewController title, website title by default
-vc.customTitle = "Instagram" // By default, the web title is displayed
+    // Progress view tint color
+    vc.progressViewTintColor = UIColor.green // #E1306C by default
 
-// Progress view tint color
-vc.progressViewTintColor = UIColor.green // #E1306C by default
+    // 1Password integration
+    vc.allowOnePasswordIntegration = false // true by default
+    ```
 
-// 1Password integration
-vc.allowOnePasswordIntegration = false // true by default
-```
+5. **Show** it:
 
-- **Show** it:
-
-```swift    
-show(vc, sender: self)
-```
+    ```swift    
+    show(vc, sender: self)
+    ```
 
 ## Contributing to this project
 
